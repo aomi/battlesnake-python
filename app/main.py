@@ -8,6 +8,10 @@ def static(path):
     return bottle.static_file(path, root='static/')
 
 
+@bottle.route('/')
+def index():
+    return 'serving is running successfully'
+
 @bottle.post('/start')
 def start():
     data = bottle.request.json
