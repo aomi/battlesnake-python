@@ -14,7 +14,8 @@ class Node:         #Class for spaces on the board, refered to as Nodes
 
 
 class NodeList:
-    def __init__(self):
+    def __init__(self, gameID):
+        self.gameID = gameID
         #initialize the 2D array of Nodes. empty
         print("Initializing NodeList")
         self.data = [[0 for x in range(MAPSIZEX)] for y in range(MAPSIZEY)]
