@@ -53,6 +53,7 @@ def move():
     data = bottle.request.json
     # initialize the node list with received data
     # add snakes into NodeList
+    board[data['game_id']].clear()
     for snake in data['snakes']:
         snake_id = snake['id']
         head = false
@@ -66,6 +67,7 @@ def move():
     for food in data['food']:
         board[data['game_id']].changeContent(food[0],food[1])
 
+    board[data['game_id']].weight()
 
     # TODO: Do things with data
     directions = ['up', 'down', 'left', 'right']

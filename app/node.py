@@ -57,9 +57,6 @@ class NodeList:
                 self.data[x][y].weight = 0
 
 
-    def 
-
-
     def weight(self):                                       #Weights every node on the board.
         for x in range(MAPSIZEX):
             for y in range(MAPSIZEY):
