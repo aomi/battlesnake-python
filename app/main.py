@@ -44,16 +44,19 @@ def start():
         'color': '#00FF00',
         'taunt': 'Forming, Storming, Norming, Performing',
         'head_url': head_url,
-        'name': 'Wild\'sDisciples'
+        'name': 'Wild\'s Disciples'
     }
 
 
 @bottle.post('/move')
 def move():
-    data = bottle.request.json
     # initialize the node list with received data
-    # add snakes into NodeList
+    data = bottle.request.json
+
+    #clear the old board state to prepare it for the new population
     board[data['game_id']].clear()
+
+    # add snakes into NodeList
     for snake in data['snakes']:
         snake_id = snake['id']
         head = false
@@ -67,7 +70,10 @@ def move():
     for food in data['food']:
         board[data['game_id']].changeContent(food[0],food[1])
 
+    # gives each node a weighting so the algorithm knows the relative safety of each node.
     board[data['game_id']].weight()
+
+    #a* call happens here.
 
     # TODO: Do things with data
     directions = ['up', 'down', 'left', 'right']
@@ -75,7 +81,7 @@ def move():
     return
     {
         'move': random.choice(directions),
-        'taunt': 'battlesnake-python!'
+        'taunt': 'Forming, Storming, Norming, Performing'
     }
 
 
