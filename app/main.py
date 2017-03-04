@@ -21,7 +21,7 @@ def start():
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
-    
+
     #initializing a new board in the dictionary according to the game_id
     board[game_id] = NodeList(game_id)
 
@@ -39,7 +39,7 @@ def start():
 
     # TODO: Do things with data
 
-    return 
+    return
     {
         'color': '#00FF00',
         'taunt': 'Forming, Storming, Norming, Performing',
@@ -70,7 +70,7 @@ def move():
     # TODO: Do things with data
     directions = ['up', 'down', 'left', 'right']
 
-    return 
+    return
     {
         'move': random.choice(directions),
         'taunt': 'battlesnake-python!'
@@ -81,3 +81,14 @@ def move():
 application = bottle.default_app()
 if __name__ == '__main__':
     bottle.run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8080'))
+
+
+
+"""
+Numbering system for Node contents
+0 = wall / impassable / snake tail (danger)
+1 = open
+2 = food
+3 = our head
+4 = other snake head
+"""

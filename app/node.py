@@ -29,10 +29,8 @@ class NodeList:
                 self.data[x][y] = Node(x,y)
 
 
-    def addNode(self,x,y,content):
-        self.data[x][y].content = content
-        self.data[x][y].x = x
-        self.data[x][y].y = y
+    def changeContent(self,x,y,newcontent):
+        self.data[x][y].content = newcontent
 
 
     def getList(self):
