@@ -58,12 +58,8 @@ def start():
 
 @post('/move')
 def move():
-<<<<<<< ae8a175f14c88f7e8ef46d11ebd14b24bd3ec2e7
-=======
-    data = request.json
->>>>>>> change bottle imports
     # initialize the node list with received data
-    data = bottle.request.json
+    data = request.json
 
     #clear the old board state to prepare it for the new population
     board[data['game_id']].clear()
