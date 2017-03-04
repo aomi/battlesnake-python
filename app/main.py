@@ -1,5 +1,6 @@
 from node import *
 from bottle import request, route, run, template, post, default_app, static_file
+from astar import calculatePathWeight
 import os
 import random
 
@@ -82,7 +83,7 @@ def move():
 
     # gives each node a weighting so the algorithm knows the relative safety of each node.
     board[data['game_id']].weight()
-    
+
     for y in range(MAPSIZEY):
         s = ''
         for x in range(MAPSIZEX):                   ####TESTING
