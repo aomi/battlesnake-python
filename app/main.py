@@ -16,15 +16,21 @@ def index():
 
 @bottle.post('/start')
 def start():
+    #getting the data from the server at startup
     data = bottle.request.json
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
     
-    board[game_id] = NodeList()
-    # set node class variables
+    #initializing a new board in the dictionary according to the game_id
+    board[game_id] = NodeList(game_id)
+
+    # set node class variables for the specific game board
     board[game_id].MAPSIZEX = board_width
     board[game_id].MAPSIZEY = board_height
+
+    #connecting the board nodes together.  The board is still not populated with any data yet.
+    connect(board[game_id])
 
     head_url = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
@@ -46,23 +52,19 @@ def start():
 def move():
     data = bottle.request.json
     # initialize the node list with received data
-    board = NodeList()
     # add snakes into NodeList
     for snake in data['snakes']:
         snake_id = snake['id']
         head = false
         for a in snake['coords']:
             if(not head):
-                board.add(a[0],a[1],snake_id)
+                board[data['game_id']].changeContent(a[0],a[1],snake_id)
         else:
-                board.add(a[0],a[1],1)
+                board[data['game_id']].content(a[0],a[1],1)
 
+    #add the food into the node list
     for food in data['food']:
-        board.add(food[0],food[1])
-
-    connect(board)
-
-
+        board[data['game_id']].changeContent(food[0],food[1])
 
 
     # TODO: Do things with data
