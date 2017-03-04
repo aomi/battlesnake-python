@@ -1,7 +1,8 @@
+from node import *
 import bottle
 import os
 import random
-import node
+
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -40,6 +41,20 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+    # initialize the node list with received data
+    board = NodeList()
+    # add snakes into NodeList
+    for snake in data['snakes']:
+        snake_id = snake['id']
+        head = false
+        for a in snake['coords']:
+            if(!head):
+                board.add(a[0],a[1],snake_id)
+        else:
+                board.add(a[0],a[1],1)
+
+
+
 
     # TODO: Do things with data
     directions = ['up', 'down', 'left', 'right']
