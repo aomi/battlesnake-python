@@ -23,8 +23,8 @@ def start():
     
     board[game_id] = NodeList()
     # set node class variables
-    node.MAPSIZEX = board_width
-    node.MAPSIZEY = board_height
+    board[game_id].MAPSIZEX = board_width
+    board[game_id].MAPSIZEY = board_height
 
     head_url = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
