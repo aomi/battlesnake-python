@@ -34,7 +34,7 @@ def start():
         'color': '#00FF00',
         'taunt': 'Forming, Storming, Norming, Performing',
         'head_url': head_url,
-        'name': 'battlesnake-python'
+        'name': 'Wild\'sDisciples'
     }
 
 
@@ -48,7 +48,7 @@ def move():
         snake_id = snake['id']
         head = false
         for a in snake['coords']:
-            if(!head):
+            if(not head):
                 board.add(a[0],a[1],snake_id)
         else:
                 board.add(a[0],a[1],1)
