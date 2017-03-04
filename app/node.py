@@ -13,27 +13,40 @@ class Node:         #Class for spaces on the board, refered to as Nodes
         self.weight = 0     #Relative safety of node
 
 
-#Initialize the 2D array of Nodes.
-NodeList = [[0 for x in range(MAPSIZEX)] for y in range(MAPSIZEY)]
+class NodeList:
+    def __init__(self):
+        #initialize the 2D array of Nodes. empty
+        print("Initializing NodeList")
+        self.data = [[0 for x in range(MAPSIZEX)] for y in range(MAPSIZEY)]
+        
+        # fill the 2d array with empty node instances
+        for x in range(MAPSIZEX):
+            for y in range(MAPSIZEY):
+                self.data[x][y] = Node(x,y)
 
 
-#Fill the 2D array with Node Instances.
-for x in range(MAPSIZEX):
-    for y in range(MAPSIZEY):
-        NodeList[x][y] = Node(x,y)
+    def addNode(self,x,y,content):
+        self.data[x][y].content = content
+        self.data[x][y].x = x
+        self.data[x][y].y = y
+
+        
+    def getList(self):
+        return self.data
+
 
 
 #This function prints the contents of the map as a grid.
-def printMap():
-    for x in NodeList:
-        for y in x:
-            print('',point.content,'',end='')
-        print("\n")
+#def printMap(a):
+#    for x in a.getList():
+#        for y in x:
+#            print('',point.content,'',end='')
+#        print("\n")
 
 
 #This function connects all the Nodes in the NodeList (up, down, left, right)
-def connect(NodeList):
-    for nodes in NodeList:
+def connect(board):
+    for nodes in board.getList():
         for node in nodes:
             if node.x > 0:                  #Checks if node is at the top wall
                 node.up = NodeList[node.x-1][node.y]
@@ -45,9 +58,3 @@ def connect(NodeList):
                 node.right = NodeList[node.x][node.y+1]
 
 
-#Test code for NodeList & Connect
-connect(NodeList)
-print(NodeList[0][0].x,NodeList[0][0].y) #should print 0 0
-print(NodeList[0][1].x,NodeList[0][1].y) #should print 0 1
-#this next line prints the node left of (0 1), which should be (0 0).
-print(NodeList[0][1].left.x,NodeList[0][1].left.y)
