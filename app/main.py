@@ -65,11 +65,11 @@ def move():
     # add snakes into NodeList
     for snake in data['snakes']:
         snake_id = snake['id']
-        head = false
+        head = False
         for a in snake['coords']:
             if(not head):
                 board[data['game_id']].changeContent(a[0],a[1],"wall")
-        else:
+            else:
                 board[data['game_id']].content(a[0],a[1],"wall") #IMPLEMENT TO OTHERHEAD
 
     #add the food into the node list
