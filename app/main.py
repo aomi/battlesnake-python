@@ -20,6 +20,8 @@ def start():
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
+    
+    board[game_id] = NodeList()
     # set node class variables
     node.MAPSIZEX = board_width
     node.MAPSIZEY = board_height
@@ -31,7 +33,8 @@ def start():
 
     # TODO: Do things with data
 
-    return {
+    return 
+    {
         'color': '#00FF00',
         'taunt': 'Forming, Storming, Norming, Performing',
         'head_url': head_url,
