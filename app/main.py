@@ -80,7 +80,7 @@ def move():
     board[data['game_id']].weight()
     for x in range(MAPSIZEX):
         for y in range(MAPSIZEY):                   ####TESTING
-            print (board['game_id'].getList()[x][y].content)
+            print (board[data['game_id']].getList()[x][y].content)
         print("\n")
     #a* call happens here.
 
