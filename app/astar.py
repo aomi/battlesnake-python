@@ -1,34 +1,3 @@
-#class NodeAnalysis:
-#    def __init__(self, centreNode, up, down, left, right):
-#        self.mainNode = centreNode
-
-
-#http://web.mit.edu/eranki/www/tutorials/search/
-# A*
-#initialize the open list
-#initialize the closed list
-#put the starting node on the open list (you can leave its f at zero)
-
-#while the open list is not empty
-#    find the node with the least f on the open list, call it "q"
-#    pop q off the open list
-#    generate q's 8 successors and set their parents to q
-#    for each successor
-#    	if successor is the goal, stop the search
-#        successor.g = q.g + distance between successor and q
-#        successor.h = distance from goal to successor
-#        successor.f = successor.g + successor.h
-#
-#        if a node with the same position as successor is in the OPEN list \
-#            which has a lower f than successor, skip this successor
-#        if a node with the same position as successor is in the CLOSED list \
-#            which has a lower f than successor, skip this successor
-#        otherwise, add the node to the open list
-#    end
-#    push q on the closed list
-#end
-
-
 #Determines distance via manhattan style
 def manhattanWeight(current, goal):
     return abs(current.x - goal.x) + abs(current.y - goal.y)
@@ -36,7 +5,7 @@ def manhattanWeight(current, goal):
 def astar(start, goal):
 
     start.netWeight = 0
-    lastTurnWeight = 100000000
+    lastTurnWeight = 0
     openList = [start]
     closedList = []
     start.parent = 0
@@ -45,7 +14,6 @@ def astar(start, goal):
 
         centreNode = findSmallestWeightedNode(openList, lastTurnWeight)
         openList.remove(centreNode)
-        #print("centre Node: ",centreNode.x, centreNode.y)
         successors = []
         if (centreNode.up != 0) and not (centreNode.up in closedList): successors.append(centreNode.up)
         if (centreNode.down != 0) and not (centreNode.down in closedList): successors.append(centreNode.down)
@@ -59,13 +27,12 @@ def astar(start, goal):
             successor.netWeight = successor.weight + successor.distance
             if (checkNodeEquality(successor, goal)): return goal
 
-            #print("successor: ", successor.x, successor.y, " with weight: ", successor.netWeight)
-
             if (not(successor in openList and successor.netWeight < openList[openList.index(successor)].netWeight)):
                 if (not(successor in closedList and successor.netWeight < closedList[closedList.index(successor)].netWeight)):
                     openList.insert(0,successor)
 
         closedList.insert(0,centreNode)
+        lastTurnWeight = centreNode.netWeight
 
 def checkNodeEquality(nodeA, nodeB):
     return nodeA.x == nodeB.x and nodeA.y == nodeB.y
@@ -93,12 +60,9 @@ def calculatePathWeight(start, goal):
 
     totalWeight = 0
     currentNode = astar(start, goal)
-    #print("Beginning total weight")
-    #print("end: ", currentNode.x, currentNode.y)
+
     while (currentNode.parent != 0):
-        #print("parent: ", currentNode.parent.x, currentNode.parent.y)
         totalWeight += currentNode.netWeight
-        #print(currentNode.parent)
         lastNode = currentNode
         currentNode = currentNode.parent
 
