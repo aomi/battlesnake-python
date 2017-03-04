@@ -82,6 +82,7 @@ def move():
 
     # gives each node a weighting so the algorithm knows the relative safety of each node.
     board[data['game_id']].weight()
+    
     for y in range(MAPSIZEY):
         s = ''
         for x in range(MAPSIZEX):                   ####TESTING
@@ -90,6 +91,7 @@ def move():
             else:
                 s += 'X'
         print s
+
     #a* call happens here.
     eachCherry = []
     index = 0
