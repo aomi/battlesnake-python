@@ -1,5 +1,5 @@
 from node import *
-from bottle import route, run, template, post, default_app 
+from bottle import route, run, template, post, default_app, static_file
 #import bottle
 
 import os
@@ -9,12 +9,12 @@ board = {}
 
 @route('/static/<path:path>')
 def static(path):
-    return bottle.static_file(path, root='static/')
+    return static_file(path, root='static/')
 
 
 @route('/')
 def index():
-    return bottle.template('serving is running successfully')
+    return template('serving is running successfully')
 
 
 @route('/debug/<id>')
