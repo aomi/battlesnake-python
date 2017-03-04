@@ -1,4 +1,3 @@
-
 #class NodeAnalysis:
 #    def __init__(self, centreNode, up, down, left, right):
 #        self.mainNode = centreNode
@@ -37,27 +36,30 @@ def manhattanWeight(current, goal):
 def astar(start, goal):
 
     start.netWeight = 0
-    lastTurnWeight = 0
+    lastTurnWeight = 100000000
     openList = [start]
     closedList = []
+    start.parent = 0
 
     while(len(openList)>0):
 
         centreNode = findSmallestWeightedNode(openList, lastTurnWeight)
         openList.remove(centreNode)
-
+        #print("centre Node: ",centreNode.x, centreNode.y)
         successors = []
-        if (centreNode.up != 0): successors.append(centreNode.up)
-        if (centreNode.down != 0): successors.append(centreNode.down)
-        if (centreNode.left != 0): successors.append(centreNode.left)
-        if (centreNode.right != 0): successors.append(centreNode.right)
+        if (centreNode.up != 0) and not (centreNode.up in closedList): successors.append(centreNode.up)
+        if (centreNode.down != 0) and not (centreNode.down in closedList): successors.append(centreNode.down)
+        if (centreNode.left != 0) and not (centreNode.left in closedList): successors.append(centreNode.left)
+        if (centreNode.right != 0) and not (centreNode.right in closedList): successors.append(centreNode.right)
 
         for successor in successors:
 
             successor.parent = centreNode
-            if (checkNodeEquality(successor, goal)): return
             successor.distance = manhattanWeight(successor, goal)
             successor.netWeight = successor.weight + successor.distance
+            if (checkNodeEquality(successor, goal)): return goal
+
+            #print("successor: ", successor.x, successor.y, " with weight: ", successor.netWeight)
 
             if (not(successor in openList and successor.netWeight < openList[openList.index(successor)].netWeight)):
                 if (not(successor in closedList and successor.netWeight < closedList[closedList.index(successor)].netWeight)):
@@ -82,6 +84,21 @@ def compareMinimums(openNodeList):
     minimumWeight = 10000000
     for openNode in openNodeList:
         if openNode.netWeight < minimumWeight:
+
             minimumWeight = openNode.netWeight
             minimumWeightNode = openNode
     return minimumWeightNode
+
+def calculatePathWeight(start, goal):
+
+    totalWeight = 0
+    currentNode = astar(start, goal)
+    #print("Beginning total weight")
+    #print("end: ", currentNode.x, currentNode.y)
+    while (currentNode.parent != 0):
+        print("parent: ", currentNode.parent.x, currentNode.parent.y)
+        totalWeight += currentNode.netWeight
+        #print(currentNode.parent)
+        currentNode = currentNode.parent
+    totalWeight += currentNode.netWeight
+    return totalWeight
