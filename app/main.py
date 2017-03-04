@@ -1,7 +1,5 @@
 from node import *
-from bottle import route, run, template, post, default_app, static_file
-#import bottle
-
+from bottle import request, route, run, template, post, default_app, static_file
 import os
 import random
 
@@ -14,7 +12,7 @@ def static(path):
 
 @route('/')
 def index():
-    return template('serving is running successfully')
+    return 'server is running properly'
 
 
 @route('/debug/<id>')
@@ -67,16 +65,16 @@ def move():
     # add snakes into NodeList
     for snake in data['snakes']:
         snake_id = snake['id']
-        head = false
+        head = False
         for a in snake['coords']:
             if(not head):
-                board[data['game_id']].changeContent(a[0],a[1],snake_id)
-        else:
-                board[data['game_id']].content(a[0],a[1],1)
+                board[data['game_id']].changeContent(a[0],a[1],"wall")
+            else:
+                board[data['game_id']].content(a[0],a[1],"wall") #IMPLEMENT TO OTHERHEAD
 
     #add the food into the node list
     for food in data['food']:
-        board[data['game_id']].changeContent(food[0],food[1])
+        board[data['game_id']].changeContent(food[0],food[1],"food")
 
     # gives each node a weighting so the algorithm knows the relative safety of each node.
     board[data['game_id']].weight()
