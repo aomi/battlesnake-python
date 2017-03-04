@@ -1,7 +1,7 @@
 import bottle
 import os
 import random
-
+import node
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -18,6 +18,9 @@ def start():
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
+    # set node class variables
+    node.MAPSIZEX = board_width
+    node.MAPSIZEY = board_height
 
     head_url = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
