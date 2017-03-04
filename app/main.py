@@ -1,23 +1,31 @@
 from node import *
-import bottle
+from bottle import route, run, template, post, default_app 
+#import bottle
+
 import os
 import random
 
 board = {}
 
-@bottle.route('/static/<path:path>')
+@route('/static/<path:path>')
 def static(path):
     return bottle.static_file(path, root='static/')
 
 
-@bottle.route('/')
+@route('/')
 def index():
-    return 'serving is running successfully'
+    return bottle.template('serving is running successfully')
 
-@bottle.post('/start')
+
+@route('/debug/<id>')
+def display_debug(id):
+    return board[id]
+
+
+@post('/start')
 def start():
     #getting the data from the server at startup
-    data = bottle.request.json
+    data = request.json
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
@@ -33,8 +41,8 @@ def start():
     board[game_id].connect()
 
     head_url = '%s://%s/static/head.png' % (
-        bottle.request.urlparts.scheme,
-        bottle.request.urlparts.netloc
+        request.urlparts.scheme,
+        request.urlparts.netloc
     )
 
     # TODO: Do things with data
@@ -48,8 +56,12 @@ def start():
     }
 
 
-@bottle.post('/move')
+@post('/move')
 def move():
+<<<<<<< ae8a175f14c88f7e8ef46d11ebd14b24bd3ec2e7
+=======
+    data = request.json
+>>>>>>> change bottle imports
     # initialize the node list with received data
     data = bottle.request.json
 
@@ -86,9 +98,9 @@ def move():
 
 
 # Expose WSGI app (so gunicorn can find it)
-application = bottle.default_app()
+application = default_app()
 if __name__ == '__main__':
-    bottle.run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8080'))
+    run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8080'))
 
 
 

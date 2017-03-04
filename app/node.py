@@ -55,6 +55,10 @@ class NodeList:
             for y in range(MAPSIZEY):
                 self.data[x][y].content = "open"
                 self.data[x][y].weight = 0
+<<<<<<< ae8a175f14c88f7e8ef46d11ebd14b24bd3ec2e7
+=======
+ 
+>>>>>>> change bottle imports
 
 
     def weight(self):                                       #Weights every node on the board.
