@@ -3,7 +3,7 @@ import bottle
 import os
 import random
 
-boardDictionary = {}
+board = {}
 
 @bottle.route('/static/<path:path>')
 def static(path):
