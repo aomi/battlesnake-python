@@ -14,7 +14,7 @@ def static(path):
 
 @route('/')
 def index():
-    return template('serving is running successfully')
+    return 'server is running properly'
 
 
 @route('/debug/<id>')
