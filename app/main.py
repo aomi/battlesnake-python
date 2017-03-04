@@ -97,7 +97,7 @@ def move():
     eachCherry = []
     index = 0
     for food in data['food']:
-        eachCherry[index] = calculatePathWeight(ourHeadNode, board['game_id'].getNode(food[0][1]))
+        eachCherry[index] = calculatePathWeight(ourHeadNode, board[data['game_id']].getNode(food[0][1]))
         index = index + 1
 
     currentSmallestCherry = eachCherry[0]
