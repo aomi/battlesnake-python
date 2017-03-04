@@ -3,7 +3,7 @@ import bottle
 import os
 import random
 
-boardDictionary = {}
+board = {}
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -30,7 +30,7 @@ def start():
     board[game_id].MAPSIZEY = board_height
 
     #connecting the board nodes together.  The board is still not populated with any data yet.
-    connect(board[game_id])
+    board[game_id].connect()
 
     head_url = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
