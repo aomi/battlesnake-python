@@ -36,7 +36,7 @@ class NodeList:
     def getList(self):
         return self.data
 
-    def getNode(self,x,y,):
+    def getNode(self,x,y):
         return self.data[x][y]
 
     def connect(self):

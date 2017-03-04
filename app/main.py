@@ -58,9 +58,10 @@ def start():
 def move():
     # initialize the node list with received data
     data = request.json
-
+    ourID = data['you']
     #clear the old board state to prepare it for the new population
     board[data['game_id']].clear()
+    ourHeadNode = board[data['game_id']].getNode(0,0)
 
     # add snakes into NodeList
     for snake in data['snakes']:
@@ -70,6 +71,9 @@ def move():
             if(not head):
                 board[data['game_id']].changeContent(a[0],a[1],"wall")
             else:
+                if(snake['id'] == ourID):
+                    ourHeadNode = board[data['game_id']].getNode(a[0],a[1])
+
                 board[data['game_id']].content(a[0],a[1],"wall") #IMPLEMENT TO OTHERHEAD
 
     #add the food into the node list
@@ -87,13 +91,21 @@ def move():
                 s += 'X'
         print s
     #a* call happens here.
+    eachCherry = []
+    index = 0
+    for food in data['food']:
+        eachCherry[index] = calculatePathWeight(ourHeadNode, board['game_id'].getNode(food[0][1]))
+        index = index + 1
 
-    # TODO: Do things with data
-    directions = ['up', 'down', 'left', 'right']
+    currentSmallestCherry = eachCherry[0]
 
+    for cherry in eachCherry[:1]:
+        if(currentSmallestCherry[0] > eachCherry[0]):
+            currentSmallestCherry = cherry
+            
     return
     {
-        'move': random.choice(directions),
+        'move': currentSmallestCherry[1],
         'taunt': 'Forming, Storming, Norming, Performing'
     }
 
