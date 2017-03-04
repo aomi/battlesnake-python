@@ -19,9 +19,9 @@ class NodeList:
         #initialize the 2D array of Nodes. empty
         print("Initializing NodeList")
         self.data = [[0 for x in range(MAPSIZEX)] for y in range(MAPSIZEY)]
-        
+
         # fill the 2d array with empty node instances
-        for x in range(MAPSIZEX):
+        for x in range(MAPSIZEX): #populate
             for y in range(MAPSIZEY):
                 self.data[x][y] = Node(x,y)
 
@@ -31,9 +31,26 @@ class NodeList:
         self.data[x][y].x = x
         self.data[x][y].y = y
 
-        
+
     def getList(self):
         return self.data
+
+    def clear(self):
+        for x in range(MAPSIZEX):
+            for y in range(MAPSIZEY):
+                self.data[x][y].content = 0
+
+    def connect(board):
+        for nodes in board.getList():
+            for node in nodes:
+                if node.x > 0:                  #Checks if node is at the top wall
+                    node.up = NodeList[node.x-1][node.y]
+                if node.x < MAPSIZEX-1:         #Checks if node is at the bottom wall
+                    node.down = NodeList[node.x+1][node.y]
+                if node.y > 0:                  #Checks if node is at the left wall
+                    node.left = NodeList[node.x][node.y-1]
+                if node.y < MAPSIZEY-1:         #Checks if node is at the right wall
+                    node.right = NodeList[node.x][node.y+1]
 
 
 
@@ -46,16 +63,3 @@ class NodeList:
 
 
 #This function connects all the Nodes in the NodeList (up, down, left, right)
-def connect(board):
-    for nodes in board.getList():
-        for node in nodes:
-            if node.x > 0:                  #Checks if node is at the top wall
-                node.up = NodeList[node.x-1][node.y]
-            if node.x < MAPSIZEX-1:         #Checks if node is at the bottom wall
-                node.down = NodeList[node.x+1][node.y]
-            if node.y > 0:                  #Checks if node is at the left wall
-                node.left = NodeList[node.x][node.y-1]
-            if node.y < MAPSIZEY-1:         #Checks if node is at the right wall
-                node.right = NodeList[node.x][node.y+1]
-
-
