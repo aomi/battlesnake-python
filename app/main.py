@@ -53,6 +53,9 @@ def move():
         else:
                 board.add(a[0],a[1],1)
 
+    for food in data['food']:
+        board.add(food[0],food[1])
+
 
 
 
