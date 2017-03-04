@@ -3,6 +3,7 @@ import bottle
 import os
 import random
 
+boardDictionary = {}
 
 @bottle.route('/static/<path:path>')
 def static(path):
@@ -56,13 +57,16 @@ def move():
     for food in data['food']:
         board.add(food[0],food[1])
 
+    connect(board)
+
 
 
 
     # TODO: Do things with data
     directions = ['up', 'down', 'left', 'right']
 
-    return {
+    return 
+    {
         'move': random.choice(directions),
         'taunt': 'battlesnake-python!'
     }
