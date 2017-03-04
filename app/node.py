@@ -43,17 +43,17 @@ class NodeList:
             for y in range(MAPSIZEY):
                 self.data[x][y].content = 0
 
-    def connect(board):
-        for nodes in board.getList():
-            for node in nodes:
-                if node.x > 0:                  #Checks if node is at the top wall
-                    node.up = NodeList[node.x-1][node.y]
-                if node.x < MAPSIZEX-1:         #Checks if node is at the bottom wall
-                    node.down = NodeList[node.x+1][node.y]
-                if node.y > 0:                  #Checks if node is at the left wall
-                    node.left = NodeList[node.x][node.y-1]
-                if node.y < MAPSIZEY-1:         #Checks if node is at the right wall
-                    node.right = NodeList[node.x][node.y+1]
+    def connect(self):
+        for x in range(MAPSIZEX):
+            for y in range(MAPSIZEY):
+                if self.data[x][y].x > 0:                  #Checks if node is at the top wall
+                    self.data[x][y].up = self.data[x-1][y]
+                if self.data[x][y].x < MAPSIZEX-1:         #Checks if node is at the bottom wall
+                    self.data[x][y].down = self.data[x+1][y]
+                if self.data[x][y].y > 0:                  #Checks if node is at the left wall
+                    self.data[x][y].left = self.data[x][y-1]
+                if self.data[x][y].y < MAPSIZEY-1:         #Checks if node is at the right wall
+                    self.data[x][y].right = self.data[x][y+1]
 
 
 
