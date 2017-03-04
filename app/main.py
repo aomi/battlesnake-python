@@ -1,7 +1,5 @@
 from node import *
-from bottle import route, run, template, post, default_app, static_file
-#import bottle
-
+from bottle import request, route, run, template, post, default_app, static_file
 import os
 import random
 
