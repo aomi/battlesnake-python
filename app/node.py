@@ -11,6 +11,9 @@ class Node:         #Class for spaces on the board, refered to as Nodes
         self.right = 0      #Reference to node to the right (0 if wall)
         self.content = 0    #Content of node (eg fruit, empty, enemy, etc.)
         self.weight = 0     #Relative safety of node
+        self.distance = 0   #Distance from current fruit
+        self.netWeight = 0  #Total weighting of node
+        self.parent = 0     #Previous Pathway for Astar
 
 
 class NodeList:

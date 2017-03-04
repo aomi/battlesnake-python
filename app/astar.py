@@ -1,17 +1,10 @@
-#Matts Node Init
 
-class Node:         #Class for spaces on the board, refered to as Nodes
-    def __init__(self, xcoord, ycoord):
-        self.x = xcoord     #X coordinate of this node
-        self.y = ycoord     #Y coordinate of this node
-        self.up = 0         #Reference to node up (0 if wall)
-        self.down = 0       #Reference to node down (0 if wall)
-        self.left = 0       #Reference to node to the left (0 if wall)
-        self.right = 0      #Reference to node to the right (0 if wall)
-        self.content = 0    #Content of node (eg fruit, empty, enemy, etc.)
-        self.weight = 0     #Relative safety of node
+#class NodeAnalysis:
+#    def __init__(self, centreNode, up, down, left, right):
+#        self.mainNode = centreNode
 
 
+#http://web.mit.edu/eranki/www/tutorials/search/
 # A*
 #initialize the open list
 #initialize the closed list
@@ -41,31 +34,54 @@ class Node:         #Class for spaces on the board, refered to as Nodes
 def manhattanWeight(current, goal):
     return abs(current.x - goal.x) + abs(current.y - goal.y)
 
+def astar(start, goal):
 
-#Determine smallest weight Node in OpenList
-def smallestWeight(openNodeList, previousWeighting):
-    if (len(openNodeList)<=3):
+    start.netWeight = 0
+    lastTurnWeight = 0
+    openList = [start]
+    closedList = []
+
+    while(len(openList)>0):
+
+        centreNode = findSmallestWeightedNode(openList, lastTurnWeight)
+        openList.remove(centreNode)
+
+        successors = []
+        if (centreNode.up != 0): successors.append(centreNode.up)
+        if (centreNode.down != 0): successors.append(centreNode.down)
+        if (centreNode.left != 0): successors.append(centreNode.left)
+        if (centreNode.right != 0): successors.append(centreNode.right)
+
+        for successor in successors:
+
+            successor.parent = centreNode
+            if (checkNodeEquality(successor, goal)): return
+            successor.distance = manhattanWeight(successor, goal)
+            successor.netWeight = successor.weight + successor.distance
+
+            if (not(successor in openList and successor.netWeight < openList[openList.index(successor)].netWeight)):
+                if (not(successor in closedList and successor.netWeight < closedList[closedList.index(successor)].netWeight)):
+                    openList.insert(0,successor)
+
+        closedList.insert(0,centreNode)
+
+def checkNodeEquality(nodeA, nodeB):
+    return nodeA.x == nodeB.x and nodeA.y == nodeB.y
+
+def findSmallestWeightedNode(openNodeList, previousWeighting):
+    if (len(openNodeList)<=4):
         return compareMinimums(openNodeList)
     else:
-        currentSmallestWeighting = compareMinimums(openNodeList[:3])
-        if (currentSmallestWeighting <= previousWeighting):
-            return currentSmallestWeighting
+        smallestWeightedNode = compareMinimums(openNodeList[:4])
+        if (smallestWeightedNode.netWeight <= previousWeighting):
+            return smallestWeightedNode
         else:
             return compareMinimums(openNodeList)
 
-
-#Compares list of nodes for smallest minimum weight
 def compareMinimums(openNodeList):
+    minimumWeight = 10000000
     for openNode in openNodeList:
-        if openNode.weight < minimumWeight:
-            minimumWeight = openNode.weight
+        if openNode.netWeight < minimumWeight:
+            minimumWeight = openNode.netWeight
             minimumWeightNode = openNode
     return minimumWeightNode
-
-
-
-def astar(start, goal, grid):
-
-    start.weight = 0
-    openList = [start]
-    closedList = []
