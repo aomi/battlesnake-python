@@ -79,9 +79,10 @@ def move():
     # gives each node a weighting so the algorithm knows the relative safety of each node.
     board[data['game_id']].weight()
     for x in range(MAPSIZEX):
+        s = ''
         for y in range(MAPSIZEY):                   ####TESTING
-            print (board[data['game_id']].getList()[x][y].content, end='')
-        print("\n")
+            s += board[data['game_id']].getList()[x][y].content
+        print s
     #a* call happens here.
 
     # TODO: Do things with data
