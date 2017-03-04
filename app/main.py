@@ -32,7 +32,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
+        'taunt': 'Forming, Storming, Norming, Performing',
         'head_url': head_url,
         'name': 'battlesnake-python'
     }
