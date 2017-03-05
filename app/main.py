@@ -95,6 +95,9 @@ def move():
     
     for food in data['food']:
         if debug: print("current food:", food)
+        if debug: print("head: ", ourHeadNode.x, ourHeadNode.y)
+        if debug: tempNode = board[data['game_id']].getNode(food[0], food[1])
+        if debug: print("food icon: ", tempNode.x, tempNode.y)
         eachCherry.append(calculatePathWeight(ourHeadNode, board[data['game_id']].getNode(food[0], food[1])))
         if debug: print("current EachCherry:", eachCherry)
 
