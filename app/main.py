@@ -37,7 +37,7 @@ def start():
     #connecting the board nodes together.  The board is still not populated with any data yet.
     board[game_id].connect()
 
-    head_url = '%s://%s/static/head.png' % (
+    head_url = '%s://%s/static/head.gif' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
     )
