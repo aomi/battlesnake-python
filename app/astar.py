@@ -17,10 +17,10 @@ def astar(start, goal):
         centreNode = findSmallestWeightedNode(openList, lastTurnWeight)
         openList.remove(centreNode)
         successors = []
-        if (centreNode.up != 0) and not (centreNode.up in closedList): successors.append(centreNode.up)
-        if (centreNode.down != 0) and not (centreNode.down in closedList): successors.append(centreNode.down)
-        if (centreNode.left != 0) and not (centreNode.left in closedList): successors.append(centreNode.left)
-        if (centreNode.right != 0) and not (centreNode.right in closedList): successors.append(centreNode.right)
+        if (centreNode.up != 0) and (centreNode.up.content != "wall") and not (centreNode.up in closedList): successors.append(centreNode.up)
+        if (centreNode.down != 0) and (centreNode.down.content != "wall")and not (centreNode.down in closedList): successors.append(centreNode.down)
+        if (centreNode.left != 0) and (centreNode.left.content != "wall")and not (centreNode.left in closedList): successors.append(centreNode.left)
+        if (centreNode.right != 0) and (centreNode.right.content != "wall")and not (centreNode.right in closedList): successors.append(centreNode.right)
 
         for successor in successors:
 
