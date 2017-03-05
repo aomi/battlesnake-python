@@ -4,6 +4,8 @@ def manhattanWeight(current, goal):
 
 def astar(start, goal):
 
+    print("start: ", start.x, start.y)
+    print("goal: ", start.x, start.y)
     start.netWeight = 0
     lastTurnWeight = 0
     openList = [start]
