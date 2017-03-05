@@ -48,7 +48,7 @@ def start():
 
     return
     {
-        'color': '#00FF00',
+        'color': '#66CCFF',
         'taunt': 'Forming, Storming, Norming, Performing',
         'head_url': head_url,
         'name': 'Wild\'s Disciples'
