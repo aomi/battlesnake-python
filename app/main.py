@@ -1,30 +1,28 @@
 from node import *
-from bottle import request, route, run, template, post, default_app, static_file
+import bottle
+#from bottle import request, route, run, template, post, default_app, static_file
 from astar import calculatePathWeight
 import os
 import random
 
+debug = True
+
 board = {}
 
-@route('/static/<path:path>')
+@bottle.route('/static/<path:path>')
 def static(path):
-    return static_file(path, root='static/')
+    return bottle.static_file(path, root='static/')
 
 
-@route('/')
+@bottle.route('/')
 def index():
     return 'server is running properly'
 
 
-@route('/debug/<id>')
-def display_debug(id):
-    return board[id]
-
-
-@post('/start')
+@bottle.post('/start')
 def start():
     #getting the data from the server at startup
-    data = request.json
+    data = bottle.request.json
     game_id = data['game_id']
     board_width = data['width']
     board_height = data['height']
@@ -40,25 +38,24 @@ def start():
     board[game_id].connect()
 
     head_url = '%s://%s/static/head.png' % (
-        request.urlparts.scheme,
-        request.urlparts.netloc
+        bottle.request.urlparts.scheme,
+        bottle.request.urlparts.netloc
     )
 
     # TODO: Do things with data
 
-    return
-    {
-        'color': '#00FF00',
+    return {
+        'color': '#66CCFF',
         'taunt': 'Forming, Storming, Norming, Performing',
         'head_url': head_url,
         'name': 'Wild\'s Disciples'
     }
 
 
-@post('/move')
+@bottle.post('/move')
 def move():
     # initialize the node list with received data
-    data = request.json
+    data = bottle.request.json
     ourID = data['you']
     #clear the old board state to prepare it for the new population
     board[data['game_id']].clear()
@@ -95,10 +92,11 @@ def move():
 
     #a* call happens here.
     eachCherry = []
-    index = 0
+    
     for food in data['food']:
-        eachCherry[index] = calculatePathWeight(ourHeadNode, board[data['game_id']].getNode(food[0], food[1]))
-        index = index + 1
+        if debug: print("current food:", food)
+        eachCherry.append(calculatePathWeight(ourHeadNode, board[data['game_id']].getNode(food[0], food[1])))
+        if debug: print("current EachCherry:", eachCherry)
 
     currentSmallestCherry = eachCherry[0]
 
@@ -114,9 +112,9 @@ def move():
 
 
 # Expose WSGI app (so gunicorn can find it)
-application = default_app()
+application = bottle.default_app()
 if __name__ == '__main__':
-    run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8080'))
+    bottle.run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8080'))
 
 
 
