@@ -5,6 +5,8 @@ from astar import calculatePathWeight
 import os
 import random
 
+debug = True
+
 board = {}
 
 @bottle.route('/static/<path:path>')
@@ -93,7 +95,9 @@ def move():
     eachCherry = []
     
     for food in data['food']:
+        if debug: print("current food:", food)
         eachCherry.append(calculatePathWeight(ourHeadNode, board[data['game_id']].getNode(food[0], food[1])))
+        if debug: print("current EachCherry:", eachCherry)
 
     currentSmallestCherry = eachCherry[0]
 
