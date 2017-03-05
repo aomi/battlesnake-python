@@ -22,7 +22,6 @@ def index():
 @bottle.post('/start')
 def start():
     #getting the data from the server at startup
-    bottle.
     data = bottle.request.json
     game_id = data['game_id']
     board_width = data['width']
