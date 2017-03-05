@@ -104,8 +104,7 @@ def move():
         if(currentSmallestCherry[0] > eachCherry[0]):
             currentSmallestCherry = cherry
             
-    return
-    {
+    return {
         'move': currentSmallestCherry[1],
         'taunt': 'Forming, Storming, Norming, Performing'
     }
