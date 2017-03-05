@@ -64,15 +64,16 @@ def move():
     # add snakes into NodeList
     for snake in data['snakes']:
         snake_id = snake['id']
-        head = False
+        head = True
         for a in snake['coords']:
-            if(not head):
-                board[data['game_id']].changeContent(a[0],a[1],"wall")
-            else:
+            if(head):
                 if(snake['id'] == ourID):
                     ourHeadNode = board[data['game_id']].getNode(a[0],a[1])
 
                 board[data['game_id']].content(a[0],a[1],"wall") #IMPLEMENT TO OTHERHEAD
+                head = False
+            else:
+                board[data['game_id']].changeContent(a[0],a[1],"wall")
 
     #add the food into the node list
     for food in data['food']:
@@ -92,7 +93,7 @@ def move():
 
     #a* call happens here.
     eachCherry = []
-    
+
     for food in data['food']:
         if debug: print("current food:", food)
         if debug: print("head: ", ourHeadNode.x, ourHeadNode.y)
@@ -106,7 +107,7 @@ def move():
     for cherry in eachCherry[:1]:
         if(currentSmallestCherry[0] > eachCherry[0]):
             currentSmallestCherry = cherry
-            
+
     return {
         'move': currentSmallestCherry[1],
         'taunt': 'Forming, Storming, Norming, Performing'
