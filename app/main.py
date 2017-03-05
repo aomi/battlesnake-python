@@ -102,10 +102,11 @@ def move():
         eachCherry.append(calculatePathWeight(ourHeadNode, tempNode))
         if debug: print("current EachCherry:", eachCherry)
 
-    currentSmallestCherry = eachCherry[0]
+    currentSmallestCherryValue = 10000000
 
     for cherry in eachCherry[:1]:
-        if(currentSmallestCherry[0] > eachCherry[0]):
+        if(currentSmallestCherryValue > cherry[0]):
+            currentSmallestCherryValue = cherry[0]
             currentSmallestCherry = cherry
 
     return {
