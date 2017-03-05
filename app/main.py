@@ -110,6 +110,12 @@ def move():
             currentSmallestCherryValue = cherry[0]
             currentSmallestCherry = cherry
 
+    if currentSmallestCherry[1] == "fail":
+        if ourHeadNode.left != 0 and ourHeadNode.left.content != 'wall': currentSmallestCherry[1] = "left"
+        if ourHeadNode.up != 0 and ourHeadNode.up.content != 'wall': currentSmallestCherry[1] = "up"
+        if ourHeadNode.right != 0 and ourHeadNode.right.content != 'wall': currentSmallestCherry[1] = "right"
+        else: currentSmallestCherry[1] = "down"
+        
     return {
         'move': currentSmallestCherry[1],
         'taunt': 'Forming, Storming, Norming, Performing'
