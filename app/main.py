@@ -95,10 +95,9 @@ def move():
 
     #a* call happens here.
     eachCherry = []
-    index = 0
+    
     for food in data['food']:
-        eachCherry[index] = calculatePathWeight(ourHeadNode, board[data['game_id']].getNode(food[0], food[1]))
-        index = index + 1
+        eachCherry.append(calculatePathWeight(ourHeadNode, board[data['game_id']].getNode(food[0], food[1])))
 
     currentSmallestCherry = eachCherry[0]
 
