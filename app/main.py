@@ -82,9 +82,9 @@ def move():
     # gives each node a weighting so the algorithm knows the relative safety of each node.
     board[data['game_id']].weight()
 
-    for y in range(MAPSIZEY):
+    for y in range(board[data['game_id']].MAPSIZEY):
         s = ''
-        for x in range(MAPSIZEX):                   ####TESTING
+        for x in range(board[data['game_id']].MAPSIZEY):                   ####TESTING
             if(board[data['game_id']].getList()[x][y].content == 'open'):
                 s += 'O'
             else:
