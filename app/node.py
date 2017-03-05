@@ -70,6 +70,8 @@ class NodeList:
                     self.data[x][y].weight += 2
                 if (self.data[x][y].right == 0) or (self.data[x][y].right.content == "wall"):
                     self.data[x][y].weight += 2
+                if (self.data[x][y].content == "wall"):
+                    self.data[x][y].weight = 50
 
 
 #This function prints the contents of the map as a grid.
