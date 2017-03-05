@@ -70,7 +70,7 @@ def move():
                 if(snake['id'] == ourID):
                     ourHeadNode = board[data['game_id']].getNode(a[0],a[1])
 
-                board[data['game_id']].content(a[0],a[1],"wall") #IMPLEMENT TO OTHERHEAD
+                board[data['game_id']].changeContent(a[0],a[1],"wall") #IMPLEMENT TO OTHERHEAD
                 head = False
             else:
                 board[data['game_id']].changeContent(a[0],a[1],"wall")
