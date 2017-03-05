@@ -62,14 +62,14 @@ class NodeList:
     def weight(self):                                       #Weights every node on the board.
         for x in range(MAPSIZEX):
             for y in range(MAPSIZEY):
-                if (self.data[x][y].up == 0) or (self.data[x][y].up.content == "wall"):
-                    self.data[x][y].weight += 1
-                if (self.data[x][y].down == 0) or (self.data[x][y].down.content == "wall"):
-                    self.data[x][y].weight += 1
-                if (self.data[x][y].left == 0) or (self.data[x][y].left.content == "wall"):
-                    self.data[x][y].weight += 1
-                if (self.data[x][y].right == 0) or (self.data[x][y].right.content == "wall"):
-                    self.data[x][y].weight += 1
+                if (self.data[x][y].up.content == "wall"):
+                    self.data[x][y].weight += 2
+                if (self.data[x][y].down.content == "wall"):
+                    self.data[x][y].weight += 2
+                if (self.data[x][y].left.content == "wall"):
+                    self.data[x][y].weight += 2
+                if (self.data[x][y].right.content == "wall"):
+                    self.data[x][y].weight += 2
                 if (self.data[x][y].content == "wall"):
                     self.data[x][y].weight = 50
 
