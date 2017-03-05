@@ -67,8 +67,8 @@ def calculatePathWeight(start, goal):
         currentNode = currentNode.parent
 
     totalWeight += currentNode.netWeight
-    #print("current: ", currentNode.x, currentNode.y)
-    #print("last: ", lastNode.x, lastNode.y)
+    print("currentNode: ", currentNode.x, currentNode.y)
+    print("lastNode: ", lastNode.x, lastNode.y)
     if lastNode.x == currentNode.x :
         if (currentNode.y - lastNode.y == 1): direction = "up"
         else: direction = "down"
