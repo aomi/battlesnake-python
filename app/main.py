@@ -56,6 +56,7 @@ def start():
 def move():
     # initialize the node list with received data
     data = bottle.request.json
+    gameID = data['game_id']
     ourID = data['you']
     #clear the old board state to prepare it for the new population
     board[data['game_id']].clear()
@@ -82,9 +83,9 @@ def move():
     # gives each node a weighting so the algorithm knows the relative safety of each node.
     board[data['game_id']].weight()
 
-    for y in range(board[data['game_id']].MAPSIZEY):
+    for y in range(board[gameID].MAPSIZEY):
         s = ''
-        for x in range(board[data['game_id']].MAPSIZEY):                   ####TESTING
+        for x in range(board[gameID].MAPSIZEY):                   ####TESTING
             if(board[data['game_id']].getList()[x][y].content == 'open'):
                 s += 'O'
             else:
