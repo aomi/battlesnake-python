@@ -22,6 +22,7 @@ def index():
 @bottle.post('/start')
 def start():
     #getting the data from the server at startup
+    bottle.
     data = bottle.request.json
     game_id = data['game_id']
     board_width = data['width']
@@ -44,8 +45,7 @@ def start():
 
     # TODO: Do things with data
 
-    return
-    {
+    return {
         'color': '#66CCFF',
         'taunt': 'Forming, Storming, Norming, Performing',
         'head_url': head_url,
