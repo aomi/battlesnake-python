@@ -47,7 +47,7 @@ def start():
     return {
         'color': '#66CCFF',
         'taunt': 'Forming, Storming, Norming, Performing',
-        'head_url': 'http://web.uvic.ca/~aomi/files/head.png',
+        'head_url': 'http://web.uvic.ca/~aomi/files/head.gif',
         'name': 'Wild\'s Disciples'
     }
 
