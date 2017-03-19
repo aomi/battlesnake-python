@@ -1,3 +1,9 @@
+# BattleSnake 2017 - Wild's Disciples
+Forked from battlesnake-python.
+Uses A* for basic finding and attempts to go for all food objectives. Currently has a bug where it will randomly hit a wall. 
+
+
+
 # battlesnake-python
 
 A simple [BattleSnake AI](http://battlesnake.io) written in Python. 
