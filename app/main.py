@@ -1,18 +1,34 @@
-from node import *
-import bottle
-#from bottle import request, route, run, template, post, default_app, static_file
-from astar import calculatePathWeight
+import json
 import os
 import random
+import bottle
 
-debug = True
+from api import ping_response, start_response, move_response, end_response
 
-board = {}
+@bottle.route('/')
+def index():
+    return '''
+    Battlesnake documentation can be found at
+       <a href="https://docs.battlesnake.io">https://docs.battlesnake.io</a>.
+    '''
 
 @bottle.route('/static/<path:path>')
 def static(path):
+    """
+    Given a path, return the static file located relative
+    to the static folder.
+
+    This can be used to return the snake head URL in an API response.
+    """
     return bottle.static_file(path, root='static/')
 
+@bottle.post('/ping')
+def ping():
+    """
+    A keep-alive endpoint used to prevent cloud application platforms,
+    such as Heroku, from sleeping the application instance.
+    """
+    return ping_response()
 
 @bottle.route('/')
 def index():
@@ -23,33 +39,17 @@ def index():
 def start():
     #getting the data from the server at startup
     data = bottle.request.json
-    game_id = data['game_id']
-    board_width = data['width']
-    board_height = data['height']
 
-    #initializing a new board in the dictionary according to the game_id
-    board[game_id] = NodeList(game_id)
+    """
+    TODO: If you intend to have a stateful snake AI,
+            initialize your snake state here using the
+            request's data if necessary.
+    """
+    print(json.dumps(data))
 
-    # set node class variables for the specific game board
-    board[game_id].MAPSIZEX = board_width
-    board[game_id].MAPSIZEY = board_height
+    color = "#00FF00"
 
-    #connecting the board nodes together.  The board is still not populated with any data yet.
-    board[game_id].connect()
-
-    head_url = '%s://%s/static/head.gif' % (
-        bottle.request.urlparts.scheme,
-        bottle.request.urlparts.netloc
-    )
-
-    # TODO: Do things with data
-
-    return {
-        'color': '#66CCFF',
-        'taunt': 'Forming, Storming, Norming, Performing',
-        'head_url': 'http://web.uvic.ca/~aomi/files/head.gif',
-        'name': 'Wild\'s Disciples'
-    }
+    return start_response(color)
 
 
 @bottle.post('/move')
@@ -62,71 +62,40 @@ def move():
     board[data['game_id']].clear()
     ourHeadNode = board[data['game_id']].getNode(0,0)
 
-    # add snakes into NodeList
-    for snake in data['snakes']:
-        snake_id = snake['id']
-        head = True
-        for a in snake['coords']:
-            if(head):
-                if(snake['id'] == ourID):
-                    ourHeadNode = board[data['game_id']].getNode(a[0],a[1])
+    """
+    TODO: Using the data from the endpoint request object, your
+            snake AI must choose a direction to move in.
+    """
+    print(json.dumps(data))
 
-                board[data['game_id']].changeContent(a[0],a[1],"wall") #IMPLEMENT TO OTHERHEAD
-                head = False
-            else:
-                board[data['game_id']].changeContent(a[0],a[1],"wall")
+    directions = ['up', 'down', 'left', 'right']
+    direction = random.choice(directions)
 
-    #add the food into the node list
-    for food in data['food']:
-        board[data['game_id']].changeContent(food[0],food[1],"food")
+    return move_response(direction)
 
-    # gives each node a weighting so the algorithm knows the relative safety of each node.
-    board[data['game_id']].weight()
 
-    for y in range(board[gameID].MAPSIZEY):
-        s = ''
-        for x in range(board[gameID].MAPSIZEY):                   ####TESTING
-            if(board[data['game_id']].getList()[x][y].content == 'open'):
-                s += 'O'
-            else:
-                s += 'X'
-        print s
+@bottle.post('/end')
+def end():
+    data = bottle.request.json
 
-    #a* call happens here.
-    eachCherry = []
+    """
+    TODO: If your snake AI was stateful,
+        clean up any stateful objects here.
+    """
+    print(json.dumps(data))
 
-    for food in data['food']:
-        if debug: print("current food:", food)
-        if debug: print("head: ", ourHeadNode.x, ourHeadNode.y)
-        tempNode = board[data['game_id']].getNode(food[0], food[1])
-        if debug: print("food icon: ", tempNode.x, tempNode.y)
-        eachCherry.append(calculatePathWeight(ourHeadNode, tempNode))
-        if debug: print("current EachCherry:", eachCherry)
-
-    currentSmallestCherryValue = eachCherry[0][0]
-    currentSmallestCherry = eachCherry[0]
-
-    for cherry in eachCherry[1:]:
-        if(currentSmallestCherryValue > cherry[0]):
-            currentSmallestCherryValue = cherry[0]
-            currentSmallestCherry = cherry
-
-    if currentSmallestCherry[1] == "fail":
-        if ourHeadNode.left != 0 and ourHeadNode.left.content != 'wall': currentSmallestCherry[1] = "left"
-        if ourHeadNode.up != 0 and ourHeadNode.up.content != 'wall': currentSmallestCherry[1] = "up"
-        if ourHeadNode.right != 0 and ourHeadNode.right.content != 'wall': currentSmallestCherry[1] = "right"
-        else: currentSmallestCherry[1] = "down"
-        
-    return {
-        'move': currentSmallestCherry[1],
-        'taunt': 'Forming, Storming, Norming, Performing'
-    }
-
+    return end_response()
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
+
 if __name__ == '__main__':
-    bottle.run(application, host=os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', '8080'))
+    bottle.run(
+        application,
+        host=os.getenv('IP', '0.0.0.0'),
+        port=os.getenv('PORT', '8080'),
+        debug=os.getenv('DEBUG', True)
+    )
 
 
 
